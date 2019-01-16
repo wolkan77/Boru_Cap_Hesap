@@ -1,0 +1,9 @@
+c:\users\waltu\documents\visual studio 2015\Projects\boru_cap_hesaplama\boru_cap_hesaplama\bin\Debug\boru_cap_hesaplama.exe.config
+c:\users\waltu\documents\visual studio 2015\Projects\boru_cap_hesaplama\boru_cap_hesaplama\bin\Debug\boru_cap_hesaplama.exe
+c:\users\waltu\documents\visual studio 2015\Projects\boru_cap_hesaplama\boru_cap_hesaplama\bin\Debug\boru_cap_hesaplama.pdb
+c:\users\waltu\documents\visual studio 2015\Projects\boru_cap_hesaplama\boru_cap_hesaplama\obj\Debug\boru_cap_hesaplama.csprojResolveAssemblyReference.cache
+c:\users\waltu\documents\visual studio 2015\Projects\boru_cap_hesaplama\boru_cap_hesaplama\obj\Debug\boru_cap_hesaplama.Form1.resources
+c:\users\waltu\documents\visual studio 2015\Projects\boru_cap_hesaplama\boru_cap_hesaplama\obj\Debug\boru_cap_hesaplama.Properties.Resources.resources
+c:\users\waltu\documents\visual studio 2015\Projects\boru_cap_hesaplama\boru_cap_hesaplama\obj\Debug\boru_cap_hesaplama.csproj.GenerateResource.Cache
+c:\users\waltu\documents\visual studio 2015\Projects\boru_cap_hesaplama\boru_cap_hesaplama\obj\Debug\boru_cap_hesaplama.exe
+c:\users\waltu\documents\visual studio 2015\Projects\boru_cap_hesaplama\boru_cap_hesaplama\obj\Debug\boru_cap_hesaplama.pdb
