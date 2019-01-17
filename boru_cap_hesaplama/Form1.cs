@@ -29,6 +29,7 @@ namespace boru_cap_hesaplama
 
         #endregion
 
+        #region Fonksiyonlar
         private double HidrolikEgim()
         {
 
@@ -79,7 +80,9 @@ namespace boru_cap_hesaplama
 
             return (debi / 1000) / (Math.PI * (Math.Pow((cap / 1000), 2)) / 4);
         }
+        #endregion
 
+        #region Olaylar
         private void button1_Click(object sender, EventArgs e)
         {
             label2.Text = string.Empty;
@@ -248,5 +251,7 @@ namespace boru_cap_hesaplama
             File.WriteAllLines(Application.StartupPath + @"\hesap.txt", yazilacak_metin);
             MessageBox.Show("Hesap Dosyası Yazıldı!");
         }
+        #endregion
+
     }
 }
