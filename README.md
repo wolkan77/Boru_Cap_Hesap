@@ -1,1 +1,3 @@
 # Boru_Cap_Hesap
+
+Basit boru optimizasyonu...
