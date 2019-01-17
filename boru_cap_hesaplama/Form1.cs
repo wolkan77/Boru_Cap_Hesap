@@ -185,14 +185,12 @@ namespace boru_cap_hesaplama
             }
             else
             {
-
                 label8.Text = "Giriş BTK ------> " + g_btk.ToString("n2") + " m" + "\n" +
                     "Çıkış BTK ------> " + c_btk.ToString("n2") + " m" + "\n" +
                     "Hidrolik Eğim, J ------> " + hidrolik_egim.ToString("n6") + " m/m" + "\n" +
                     "Hız ------>  " + hiz.ToString("n3") + " m/s" + "\n" +
-                    "Giriş PK ------> " + g_btk.ToString("n2") + " m" + "\n" +
+                    "Giriş PK ------> " + c_btk.ToString("n2") + " m" + "\n" +
                     "Çıkış PK ------> " + (c_btk - g_btk - (hidrolik_egim * mesafe)).ToString("n2") + " m";
-
             }
 
         }
@@ -249,7 +247,6 @@ namespace boru_cap_hesaplama
             string[] yazilacak_metin = label8.Text.Split('\n');
             File.WriteAllLines(Application.StartupPath + @"\hesap.txt", yazilacak_metin);
             MessageBox.Show("Hesap Dosyası Yazıldı!");
-
         }
     }
 }
