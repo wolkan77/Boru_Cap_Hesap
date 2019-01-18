@@ -25,7 +25,20 @@ namespace boru_cap_hesaplama
         private double kot_farki;
         private double mesafe;
         private double cap;
+        private double ic_cap;
+        private double et_kalinligi;
         private int C;
+        private double A;
+        private double k;
+        private double To;
+        private double Tp;
+        private double deltaH;
+        private double gravity;
+        private double c_pk;
+        private double darbe_dalgasi;
+        private double basinc_allevi;
+        private double basinc_vensano;
+
 
         #endregion
 
@@ -33,7 +46,7 @@ namespace boru_cap_hesaplama
         private double HidrolikEgim()
         {
 
-            debi = Convert.ToInt32(textBox4.Text);
+            debi = Convert.ToDouble(textBox4.Text);
             C = 149;
 
             if (kot_farki <= 100)
@@ -59,7 +72,6 @@ namespace boru_cap_hesaplama
 
         private double Hiz()
         {
-            debi = Convert.ToInt32(textBox4.Text);
 
             if (kot_farki <= 100)
             {
@@ -176,15 +188,22 @@ namespace boru_cap_hesaplama
         private void button2_Click(object sender, EventArgs e)
         {
             label8.Text = string.Empty;
-            c_btk = Convert.ToInt32(textBox2.Text);
-            g_btk = Convert.ToInt32(textBox3.Text);
+            c_btk = Convert.ToDouble(textBox2.Text);
+            g_btk = Convert.ToDouble(textBox3.Text);
             kot_farki = c_btk - g_btk;
             mesafe = Convert.ToInt32(textBox5.Text);
             double hidrolik_egim = HidrolikEgim();
+            c_pk = g_btk + hidrolik_egim * mesafe + 5;
             hiz = Hiz();
             if (kot_farki < 0)
             {
-                MessageBox.Show("Terfi Hattı Hesabı Daha Sonra Güncellenecektir!!");
+                MessageBox.Show("Terfi Hesabı gerekmektedir... Çıkış basıncı 5m olacak hesap gerçekleştirilecektir...");
+                label8.Text = "Giriş BTK ------> " + g_btk.ToString("n2") + " m" + "\n" +
+                    "Çıkış BTK ------> " + c_btk.ToString("n2") + " m" + "\n" +
+                    "Hidrolik Eğim, J ------> " + hidrolik_egim.ToString("n6") + " m/m" + "\n" +
+                    "Hız ------>  " + hiz.ToString("n3") + " m/s" + "\n" +
+                    "Çıkış PK ------> " + c_pk.ToString("n2") + " m" + "\n" +
+                    "Çıkış PK ------> " + (c_pk - g_btk - (hidrolik_egim * mesafe)).ToString("n2") + " m";
             }
             else
             {
@@ -253,5 +272,71 @@ namespace boru_cap_hesaplama
         }
         #endregion
 
+        private void button4_Click(object sender, EventArgs e)
+        {
+            k = 377;
+            gravity = 9.81;
+            if (kot_farki <= 100)
+            {
+                cap = Convert.ToInt32(comboBox3.SelectedItem);
+                ic_cap = Convert.ToDouble(cap_listesi_pn10[(int)comboBox3.SelectedItem]);
+                et_kalinligi = (Convert.ToInt32(comboBox3.SelectedItem) - ic_cap) / 2;
+
+            }
+            else if (kot_farki <= 160)
+            {
+                cap = Convert.ToInt32(comboBox3.SelectedItem);
+                ic_cap = Convert.ToDouble(cap_listesi_pn16[(int)comboBox3.SelectedItem]);
+                et_kalinligi = (Convert.ToInt32(comboBox3.SelectedItem) - ic_cap) / 2;
+            }
+            else if (kot_farki <= 200)
+            {
+                cap = Convert.ToInt32(comboBox3.SelectedItem);
+                ic_cap = Convert.ToDouble(cap_listesi_pn20[(int)comboBox3.SelectedItem]);
+                et_kalinligi = (Convert.ToInt32(comboBox3.SelectedItem) - ic_cap) / 2;
+            }
+            else
+            {
+                cap = Convert.ToInt32(comboBox3.SelectedItem);
+                ic_cap = Convert.ToDouble(cap_listesi_pn25[(int)comboBox3.SelectedItem]);
+                et_kalinligi = (Convert.ToInt32(comboBox3.SelectedItem) - ic_cap) / 2;
+            }
+
+            A = 9900 / Math.Sqrt(48.3 + (k * ic_cap / et_kalinligi));
+            To = 2 * mesafe / A;
+            darbe_dalgasi = 2 - (5 * mesafe / 10000);
+            deltaH = c_pk;
+            Tp = 1 + ((darbe_dalgasi * hiz * mesafe) / (gravity * deltaH));
+
+            basinc_allevi = A * hiz / gravity;
+            double Hm = c_pk - c_btk;
+            double Hmax_allevi = Hm + basinc_allevi;
+            double Hmin_allevi = Hm - basinc_allevi;
+
+            basinc_vensano = 2 * mesafe * hiz / gravity * Tp;
+            double Hmax_vensano = Hm + basinc_vensano;
+            double Hmin_vensano = Hm - basinc_vensano;
+
+            label11.Text = "------------Allevi Yöntemi------------" + "\n" +
+                           "Basınç -----> " + basinc_allevi.ToString("n2") + "\n" +
+                           "Hm -----> " + Hm.ToString("n2") + "\n" +
+                           "Hmaks -----> " + Hmax_allevi.ToString("n2") + "\n" +
+                           "Hmin -----> " + Hmin_allevi.ToString("n2") +"\n"+
+                           "------------Vensano Yöntemi------------" + "\n" +
+                           "Basınç -----> " + basinc_vensano.ToString("n2") + "\n" +
+                           "Hm -----> " + Hm.ToString("n2") + "\n" +
+                           "Hmaks -----> " + Hmax_vensano.ToString("n2") + "\n" +
+                           "Hmin -----> " + Hmin_vensano.ToString("n2")+"\n";
+
+            if (To > Tp)
+            {
+                label11.Text+="***Allevi Yöntemi kullanılmalıdır***";
+            }
+            else
+            {
+                label11.Text += "***Vensano Yöntemi kullanılmalıdır***";
+            }
+
+        }
     }
 }
